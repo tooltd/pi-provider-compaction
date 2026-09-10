@@ -85,6 +85,16 @@ Notes:
 
 `reasoningEffort` is passed through pi-ai's `complete()` options. pi-ai translates it into the provider-specific parameter (OpenAI/Qwen/DeepSeek/OpenRouter/Z.ai, …) and **safely ignores it** for models or compat layers that don't support it — so leaving `default` everywhere is always safe, and you only enable effort for models you know support it. For OpenAI-compatible models this lands in the request body, equivalent to `extra_body={"reasoning_effort": "low"}`.
 
+### Reasoning-heavy models as the compaction model (Qwen 3.8 27B case)
+
+Reasoning models spend a large share of their output budget on hidden reasoning tokens before writing the summary. A local **Qwen 3.8 27B** GGUF running at `xhigh` reasoned so long during compaction that the generation kept hitting its token cap before the summary was complete — even after raising `reserveTokens` to 24K — producing:
+
+```
+Summarization failed: generation hit the token cap and the summary is incomplete
+```
+
+Fix: set **`reasoningEffort` to `"low"` for that model**. Because the effort is stored per model, this only affects compaction — your main coding model keeps its own (higher) effort. `"medium"` is a reasonable middle ground if you want a bit more reasoning during compaction.
+
 ## Compaction flow
 
 ```
