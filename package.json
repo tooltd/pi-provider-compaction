@@ -1,0 +1,19 @@
+{
+  "name": "@tooltd/pi-provider-compaction",
+  "version": "0.1.0",
+  "description": "Pi extension: compact context with a separate cheaper model — per-model temperature & reasoning effort",
+  "keywords": [
+    "pi-package"
+  ],
+  "type": "module",
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*"
+  }
+}

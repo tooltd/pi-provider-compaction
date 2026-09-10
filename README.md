@@ -24,17 +24,28 @@ So per-model settings work in both custom and default mode — in default mode t
 
 ## Installation
 
+### Option 1: `pi install` (recommended)
+
+```bash
+pi install git:github.com/tooltd/pi-provider-compaction
+```
+
+Pi clones the repo and loads the extension through the `pi` manifest in `package.json`. To remove: `pi remove git:github.com/tooltd/pi-provider-compaction`.
+
+### Option 2: manual
+
 Drop this folder into Pi's extensions directory:
 
 ```
 ~/.pi/agent/extensions/pi-provider-compaction/
 ├── index.ts
+├── package.json       # pi manifest + peer dependencies
 └── config.json        # created on first use; see config.example.json
 ```
 
 Pi loads extensions at startup. If you added the folder while Pi is already running, run `/reload`.
 
-The extension is plain TypeScript loaded by Pi's transpiler — **no build step required**.
+The extension is plain TypeScript loaded by Pi's transpiler — **no build step required**. The three `@earendil-works/*` packages are provided by Pi itself (declared as `peerDependencies` with `*`), so no installation is needed.
 
 ## Commands
 
